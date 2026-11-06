@@ -50,7 +50,7 @@
     <section aria-label="Key figures">
       <div class="wrap">
         <div class="stats">
-          <div class="stat"><span class="stat-num">22</span><span class="stat-label">Men, maximum</span></div>
+          <div class="stat stat-alert"><span class="stat-num" data-days-since="2025-10-01">401</span><span class="stat-label">Days residents have waited for answers (since Oct 2025)</span></div>
           <div class="stat"><span class="stat-num" data-stat="nearest-m">≈320 m</span><span class="stat-label">To Ada Lovelace CE High School</span></div>
           <div class="stat"><span class="stat-num" data-stat="within-800">6</span><span class="stat-label">Schools &amp; nurseries within 800 m</span></div>
           <div class="stat stat-alert"><span class="stat-num"><span data-count="answered">0</span><small>/<span data-count="total">8</span></small></span><span class="stat-label">Questions answered in full</span></div>
@@ -325,6 +325,18 @@
     </div>
   </footer>
 
+  <script>
+    // Days since residents first asked for answers. Start date is in the data-days-since attribute.
+    (function () {
+      document.querySelectorAll('[data-days-since]').forEach(function (el) {
+        var p = el.getAttribute('data-days-since').split('-');
+        var start = Date.UTC(+p[0], +p[1] - 1, +p[2]);
+        var now = new Date();
+        var today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+        el.textContent = Math.floor((today - start) / 86400000);
+      });
+    })();
+  </script>
   <script>
     // Keep the question counts in step with the tracker's data-status values.
     (function () {
