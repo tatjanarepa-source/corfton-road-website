@@ -16,17 +16,19 @@
 
   var TEMPLATES = {
     mp: {
-      subject: "2 Corfton Road Approved Premises: please press HMPPS for answers",
+      subject: "2 Corfton Road Approved Premises: please table a written parliamentary question",
       body:
         "Dear Dr Huq,\n\n" +
         "I live locally and am writing about the probation hostel (Approved Premises) at 2 Corfton Road, W5 2HS.\n\n" +
         FACTS.replace("told Dr Huq", "told you") + "\n\n" +
-        "Please ask HMPPS to:\n" +
-        "1. Confirm whether the site was assessed for people convicted of sexual offences against children, under its own near-schools policy.\n" +
-        "2. Share the site's safeguarding assessment.\n" +
-        "3. Set up a residents' liaison forum and a site visit for residents and councillors.\n" +
-        "4. Explain how the community will be told about serious incidents.\n" +
-        "5. Confirm whether it is occupied, and since when.\n\n" +
+        "Residents have tried letters, a formal complaint and Freedom of Information requests. " +
+        "The Ministry of Justice refused our FOI requests on cost grounds on 2 November 2026.\n\n" +
+        "Please table a written parliamentary question to the Minister responsible for prisons and probation, asking:\n" +
+        "1. Whether 2 Corfton Road has a placement restriction for people convicted of sexual offences against children, under HMPPS's own policy on Approved Premises near schools.\n" +
+        "2. Whether a site safeguarding assessment was carried out before it reopened, and whether it considered nearby schools.\n" +
+        "3. Whether the premises is currently accommodating residents.\n\n" +
+        "A written answer would give residents a clear, public reply. " +
+        "I would also be grateful if you could ask HMPPS to set up a residents' liaison forum.\n\n" +
         "Please let me know what you will do.\n\n" +
         "Yours sincerely,\n{name}\n{address}"
     },
@@ -77,9 +79,11 @@
       btn.closest(".edited-note").hidden = true;
     });
   });
-  nameEl.addEventListener("input", function () { render(false); });
-  addrEl.addEventListener("input", function () { render(false); });
-  render(true);
+  if (nameEl && addrEl) {
+    nameEl.addEventListener("input", function () { render(false); });
+    addrEl.addEventListener("input", function () { render(false); });
+    render(true);
+  }
 
   function status(fromEl, msg) {
     var s = fromEl.closest(".step, .more-step").querySelector(".status");
