@@ -18,7 +18,6 @@
     { name: "Christ the Saviour CE Primary School", kind: "Primary school", lat: 51.513957, lng: -0.305274 },
     { name: "St Gregory's Catholic Primary School", kind: "Primary school", lat: 51.524898, lng: -0.306401 },
     { name: "The Ellen Wilkinson School for Girls", kind: "Secondary school", lat: 51.516243, lng: -0.286596 },
-    { name: "Acton Yochien School", kind: "Nursery (Japanese kindergarten)", lat: 51.51885, lng: -0.285179 },
     { name: "Holy Family Catholic Primary School", kind: "Primary school", lat: 51.521147, lng: -0.283575 }
   ];
 
