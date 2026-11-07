@@ -8,7 +8,7 @@
 
   var FACTS =
     "It can house up to 22 men assessed as high risk of serious harm, including MAPPA Level 2 and 3 cases. " +
-    "It is under 400 metres from Ada Lovelace CE High School, with six schools and nurseries within 800 metres.\n\n" +
+    "It is under 400 metres from Ada Lovelace CE High School, with five schools and nurseries within 800 metres.\n\n" +
     "On 23 July 2026 HMPPS told Dr Huq it \"cannot provide confirmation that child sex offenders will be excluded\", " +
     "although its own policy says some Approved Premises near schools are unsuitable for them.\n\n" +
     "Residents have asked HMPPS eight questions since autumn 2025. None has been answered in full, " +

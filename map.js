@@ -10,7 +10,6 @@
   var SCHOOLS = [
     { name: "Ada Lovelace Church of England High School", kind: "Secondary school and sixth form", lat: 51.519245, lng: -0.293047 },
     { name: "St Augustine's Priory", kind: "Independent girls' school", lat: 51.523111, lng: -0.293281 },
-    { name: "New World Montessori Nursery", kind: "Nursery", lat: 51.522487, lng: -0.304493 },
     { name: "Montpelier Primary School", kind: "Primary school", lat: 51.523488, lng: -0.303385 },
     { name: "St Benedict's School", kind: "Independent school", lat: 51.520846, lng: -0.307549 },
     { name: "Durston House", kind: "Independent prep school", lat: 51.516811, lng: -0.307317 },
