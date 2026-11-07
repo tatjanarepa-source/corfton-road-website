@@ -154,12 +154,12 @@
   });
   render(true);
 
-  function status(fromEl, msg) {
+  function status(fromEl, msg, ms) {
     var s = fromEl.closest(".step, .more-step").querySelector(".status");
     if (!s) return;
     s.textContent = msg;
     clearTimeout(s._t);
-    s._t = setTimeout(function () { s.textContent = ""; }, 4000);
+    s._t = setTimeout(function () { s.textContent = ""; }, ms || 4000);
   }
 
   function copy(text) {
@@ -173,15 +173,42 @@
     });
   }
 
+  // Windows silently drops mailto links longer than about 2,000 characters, and our letters are longer.
+  // There we copy the letter and open the email with just the subject; phones and Macs get it pre-filled.
+  var MAILTO_MAX = 1900;
+  var isWindows = /Windows/.test(navigator.userAgent);
+
   document.querySelectorAll("[data-mailto]").forEach(function (a) {
     var to = a.getAttribute("href").replace(/^mailto:/, "");
-    a.addEventListener("click", function (e) {
+    a.addEventListener("click", function () {
       var ta = document.getElementById(a.dataset.mailto);
       var key = ta.dataset.template;
       var subject = fill(key, TEMPLATES[key].subject);
-      a.setAttribute("href", "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(ta.value));
+      var full = "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(ta.value);
+      var addTo = key === "school" ? " Add the school office's email address in the To line." : "";
       if (missingDetails(key)) status(a, key === "school" ? "Tip: pick your school and add your name first." : "Tip: add your name and address at the top first.");
-      else status(a, key === "school" ? "Opening your email app… Add the school office's email address in the To line." : "Opening your email app…");
+      if (isWindows && full.length > MAILTO_MAX) {
+        a.setAttribute("href", "mailto:" + to + "?subject=" + encodeURIComponent(subject));
+        copy(ta.value).then(
+          function () { status(a, "The letter is copied. In the new email, click in the message and press Ctrl+V to paste it." + addTo, 15000); },
+          function () { status(a, "Use Copy text, then paste the letter into the new email." + addTo, 15000); }
+        );
+      } else {
+        a.setAttribute("href", full);
+        if (!missingDetails(key)) status(a, "Opening your email app…" + addTo, 10000);
+      }
+    });
+  });
+
+  // Gmail in the browser takes the whole letter, so no length problem.
+  document.querySelectorAll("[data-gmail]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var ta = document.getElementById(a.dataset.gmail);
+      var key = ta.dataset.template;
+      var subject = fill(key, TEMPLATES[key].subject);
+      a.setAttribute("href", "https://mail.google.com/mail/?view=cm&fs=1&su=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(ta.value));
+      if (missingDetails(key)) status(a, key === "school" ? "Tip: pick your school and add your name first." : "Tip: add your name and address at the top first.");
+      else if (key === "school") status(a, "Opening Gmail… Add the school office's email address in the To line.", 10000);
     });
   });
 
