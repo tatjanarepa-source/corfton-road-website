@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <title>Act now – 2 Corfton Road – Hanger Hill Residents</title>
-  <meta name="description" content="Join the residents' WhatsApp group and share the case about 2 Corfton Road, Ealing W5.">
-  <meta property="og:title" content="Act now: two steps, two minutes">
+  <meta name="description" content="Join the residents' WhatsApp group, share the case about 2 Corfton Road, Ealing W5, and email your child's school.">
+  <meta property="og:title" content="Act now: 2 Corfton Road">
   <meta property="og:description" content="Join the residents' group and share the case about 2 Corfton Road.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://2corftonroad.co.uk/act.html">
@@ -35,7 +35,7 @@
       <div class="wrap">
         <p class="eyebrow">Resident action hub</p>
         <h1 id="act-h">Act now.</h1>
-        <p class="lead">Two steps, two minutes.</p>
+        <p class="lead">Join, spread the word and, if you're a parent, email your child's school.</p>
 
 
         <div class="steps">
@@ -56,6 +56,35 @@
               <span id="share-native-wrap" hidden>· <button type="button" class="linklike" id="share-native">Share…</button></span>
               · <button type="button" class="linklike" id="copy-link">Copy link</button></p>
             <p class="status" id="share-status" role="status" aria-live="polite"></p>
+          </article>
+
+          <article class="step step-wide" id="step-school" aria-labelledby="school-h">
+            <p class="eyebrow">Step 3 · Parents</p>
+            <h2 id="school-h">Email your child's school</h2>
+            <p class="to">Ask the head to find out what the school has been told, and to raise it with HMPPS and Ealing's safeguarding partners. Pick your school and the email fills in.</p>
+            <form class="details-form school-form" autocomplete="on" onsubmit="return false">
+              <div class="field field-full">
+                <label for="school-pick">Your child's school</label>
+                <select id="school-pick" name="school"><option value="">Choose a school…</option></select>
+              </div>
+              <div class="field">
+                <label for="parent-name">Your full name</label>
+                <input id="parent-name" name="name" type="text" autocomplete="name" placeholder="Jane Smith">
+              </div>
+              <div class="field">
+                <label for="parent-year">Child's year group</label>
+                <input id="parent-year" name="year" type="text" placeholder="Year 4">
+              </div>
+            </form>
+            <label class="sr" for="school-text">Email to your child's school</label>
+            <textarea id="school-text" data-template="school" spellcheck="true"></textarea>
+            <p class="edited-note" hidden>You've edited this email, so your changes are kept. <button type="button" class="linklike" data-reset="school-text">Reset</button></p>
+            <div class="btn-row">
+              <a class="btn btn-red" data-mailto="school-text" href="mailto:">Open in email</a>
+              <button type="button" class="btn" data-copy="school-text">Copy text</button>
+            </div>
+            <p class="status" role="status" aria-live="polite"></p>
+            <p class="privacy-note">Send it to the school office's email address (it's on the school's website). Nothing you type here is saved or sent anywhere.</p>
           </article>
         </div>
       </div>
@@ -92,6 +121,7 @@
     </div>
   </footer>
 
+  <script src="map.js"></script>
   <script src="act.js"></script>
 </body>
 </html>

@@ -35,6 +35,7 @@
   SCHOOLS.forEach(function (s) { s.m = metres(AP, s); });
   SCHOOLS.sort(function (a, b) { return a.m - b.m; });
   SCHOOLS.forEach(function (s, i) { s.n = i + 1; });
+  window.CORFTON_SCHOOLS = SCHOOLS; // used by the schools email on the Act now page
 
   // Headline numbers.
   var stats = {

@@ -1,4 +1,4 @@
-// Action hub: fills the MP email from the reader's name and address,
+// Action hub: fills the ready-made emails from what the reader types,
 // and wires up "Open in email", "Copy text" and the share buttons.
 // Nothing is stored or sent anywhere; the reader sends the emails from their own app.
 (function () {
@@ -45,23 +45,92 @@
         "4. Make sure local schools and nurseries are kept informed.\n\n" +
         "Please let me know what you will do.\n\n" +
         "Yours sincerely,\n{name}\n{address}"
+    },
+    school: {
+      subject: "Probation hostel at 2 Corfton Road, W5: a safeguarding question for {school}",
+      body:
+        "Dear Headteacher,\n\n" +
+        "I am the parent of a child in {year} at {school}. I'm writing to make sure the school knows about the probation hostel (Approved Premises) at 2 Corfton Road, W5 2HS{distance}.\n\n" +
+        "It can house up to 22 men assessed as high risk of serious harm, including MAPPA Level 2 and 3 cases. " +
+        "Five schools and nurseries are within 800 metres of it.\n\n" +
+        "On 23 July 2026 HMPPS told our MP, Dr Rupa Huq, that it \"cannot provide confirmation that child sex offenders will be excluded\". " +
+        "Its own policy says some Approved Premises near schools are unsuitable for people convicted of sexual offences against children. " +
+        "Residents have asked since December 2025 whether this site was assessed under that policy. They have had no answer.\n\n" +
+        "{consulted}\n\n" +
+        "Could the school please:\n" +
+        "1. Tell parents whether HMPPS, the council or the police told the school about the hostel, and whether it has had any information since.\n" +
+        "2. Write to HMPPS asking whether the site was assessed under its near-schools policy and whether there is a placement restriction for people convicted of offences against children. Please also ask to be told directly about anything that affects pupils' safety.\n" +
+        "3. Raise it with the Ealing Safeguarding Children Partnership and the local Safer Neighbourhood Team (police), and consider whether arrangements such as pupils walking to and from school need reviewing.\n\n" +
+        "I'm not asking the school to take a position on rehabilitation, and I'm not making claims about any individual. " +
+        "Parents want to know that the people responsible for our children's safety have the information they need.\n\n" +
+        "The full case file, with sources, is here: https://2corftonroad.co.uk/\n\n" +
+        "Please forward this to the Designated Safeguarding Lead and the Chair of Governors.\n\n" +
+        "Kind regards,\n{name}\nParent of a child in {year}, {school}"
     }
   };
 
-  var nameEl = document.getElementById("your-name");
-  var addrEl = document.getElementById("your-address");
-  var areas = document.querySelectorAll("textarea[data-template]");
-
-  function fill(text) {
-    var name = nameEl.value.trim() || "[Your name]";
-    var addr = addrEl.value.trim() || "[Your street and postcode]";
-    return text.replace("{name}", name).replace("{address}", addr);
+  // School picker for the schools email: the list and distances come from map.js.
+  var schoolSel = document.getElementById("school-pick");
+  var SCHOOLS = window.CORFTON_SCHOOLS || [];
+  function roundM(m) { return Math.round(m / 10) * 10; }
+  if (schoolSel) {
+    SCHOOLS.forEach(function (sc, i) {
+      var o = document.createElement("option");
+      o.value = String(i);
+      o.textContent = sc.name + " (" + roundM(sc.m) + " m)";
+      schoolSel.appendChild(o);
+    });
+    var other = document.createElement("option");
+    other.value = "other"; other.textContent = "Another school";
+    schoolSel.appendChild(other);
   }
+  function pickedSchool() {
+    if (!schoolSel || schoolSel.value === "" || schoolSel.value === "other") return null;
+    return SCHOOLS[+schoolSel.value] || null;
+  }
+
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : "";
+  }
+
+  // Values for each template's placeholders. Blanks show as [brackets] so they're easy to spot.
+  function values(key) {
+    if (key === "school") {
+      var sc = pickedSchool();
+      var montpelier = sc && /Montpelier/.test(sc.name);
+      return {
+        name: val("parent-name") || "[Your name]",
+        year: val("parent-year") || "[year group]",
+        school: sc ? sc.name : "[school name]",
+        distance: sc ? ", about " + roundM(sc.m) + " metres from the school in a straight line" : "",
+        consulted: montpelier
+          ? "HMPPS did not consult or inform local schools before reopening the hostel. I understand the school confirmed this in writing to residents on 7 October 2026."
+          : "HMPPS did not consult or inform local schools before reopening the hostel. At least one nearby primary school has confirmed in writing that it was not told."
+      };
+    }
+    return {
+      name: val("your-name") || "[Your name]",
+      address: val("your-address") || "[Your street and postcode]"
+    };
+  }
+
+  function fill(key, text) {
+    var v = values(key);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? v[k] : m; });
+  }
+
+  function missingDetails(key) {
+    if (key === "school") return !val("parent-name") || !pickedSchool();
+    return !val("your-name") || !val("your-address");
+  }
+
+  var areas = document.querySelectorAll("textarea[data-template]");
 
   function render(force) {
     areas.forEach(function (ta) {
       if (ta.dataset.edited && !force) return;
-      ta.value = fill(TEMPLATES[ta.dataset.template].body);
+      ta.value = fill(ta.dataset.template, TEMPLATES[ta.dataset.template].body);
     });
   }
 
@@ -75,15 +144,15 @@
     btn.addEventListener("click", function () {
       var ta = document.getElementById(btn.dataset.reset);
       delete ta.dataset.edited;
-      ta.value = fill(TEMPLATES[ta.dataset.template].body);
+      ta.value = fill(ta.dataset.template, TEMPLATES[ta.dataset.template].body);
       btn.closest(".edited-note").hidden = true;
     });
   });
-  if (nameEl && addrEl) {
-    nameEl.addEventListener("input", function () { render(false); });
-    addrEl.addEventListener("input", function () { render(false); });
-    render(true);
-  }
+  ["your-name", "your-address", "parent-name", "parent-year", "school-pick"].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener(el.tagName === "SELECT" ? "change" : "input", function () { render(false); });
+  });
+  render(true);
 
   function status(fromEl, msg) {
     var s = fromEl.closest(".step, .more-step").querySelector(".status");
@@ -104,27 +173,25 @@
     });
   }
 
-  function missingDetails() {
-    return !nameEl.value.trim() || !addrEl.value.trim();
-  }
-
   document.querySelectorAll("[data-mailto]").forEach(function (a) {
     var to = a.getAttribute("href").replace(/^mailto:/, "");
     a.addEventListener("click", function (e) {
       var ta = document.getElementById(a.dataset.mailto);
-      var subject = TEMPLATES[ta.dataset.template].subject;
+      var key = ta.dataset.template;
+      var subject = fill(key, TEMPLATES[key].subject);
       a.setAttribute("href", "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(ta.value));
-      if (missingDetails()) status(a, "Tip: add your name and address at the top first.");
-      else status(a, "Opening your email app…");
+      if (missingDetails(key)) status(a, key === "school" ? "Tip: pick your school and add your name first." : "Tip: add your name and address at the top first.");
+      else status(a, key === "school" ? "Opening your email app… Add the school office's email address in the To line." : "Opening your email app…");
     });
   });
 
   document.querySelectorAll("[data-copy]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var ta = document.getElementById(btn.dataset.copy);
-      var subject = TEMPLATES[ta.dataset.template].subject;
+      var key = ta.dataset.template;
+      var subject = fill(key, TEMPLATES[key].subject);
       copy("Subject: " + subject + "\n\n" + ta.value).then(
-        function () { status(btn, missingDetails() ? "Copied. Remember to add your name and address." : "Copied. Paste it into a new email."); },
+        function () { status(btn, missingDetails(key) ? "Copied. Remember to fill in the [brackets]." : "Copied. Paste it into a new email."); },
         function () { ta.focus(); ta.select(); status(btn, "Couldn't copy automatically. The text is selected: copy it manually."); }
       );
     });
