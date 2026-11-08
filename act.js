@@ -56,7 +56,7 @@
         "Residents have asked since December 2025 whether this site was assessed under that policy. They have had no answer.\n\n" +
         "{consulted}\n\n" +
         "Could the school please:\n" +
-        "1. Tell parents whether HMPPS, the council or the police told the school about the hostel, and whether it has had any information since.\n" +
+        "1. Let parents know what the school has been told and what it's doing.\n" +
         "2. Write to HMPPS asking whether the site was assessed under its near-schools policy and whether there is a placement restriction for people convicted of offences against children. Please also ask to be told directly about anything that affects pupils' safety.\n" +
         "3. Raise it with the Ealing Safeguarding Children Partnership and the local Safer Neighbourhood Team (police), and consider whether arrangements such as pupils walking to and from school need reviewing.\n\n" +
         "I'm not asking the school to take a position on rehabilitation, and I'm not making claims about any individual. " +

@@ -34,9 +34,13 @@
     <section class="page-hero poster-toolbar">
       <div class="wrap">
         <p class="eyebrow"><a href="act.html">Act now</a> · Spread the word</p>
-        <h1>Print a poster.</h1>
-        <p class="lead">One A4 page. Ask before putting it up anywhere that isn't yours.</p>
-        <div class="btn-row" style="margin-top:1.5rem">
+        <h1>Print a poster or leaflets.</h1>
+        <p class="lead" id="mode-lead">One A4 page. Ask before putting it up anywhere that isn't yours.</p>
+        <div class="mode-toggle" role="group" aria-label="What to print">
+          <button type="button" class="btn" data-mode="poster" aria-pressed="true">Poster (A4)</button>
+          <button type="button" class="btn" data-mode="leaflets" aria-pressed="false">Leaflets (4 per A4)</button>
+        </div>
+        <div class="btn-row" style="margin-top:1rem">
           <button type="button" class="btn btn-red" id="print-poster">Print poster</button>
           <label class="btn ink-toggle"><input type="checkbox" id="ink-saver"> Ink-saver (white background)</label>
         </div>
@@ -76,6 +80,36 @@
       </article>
     </div>
 
+    <!-- Leaflets: four A6 copies on one A4 sheet, with cut lines. The script fills in the other three. -->
+    <div class="leaflet-stage" hidden>
+      <div class="leaflet-sheet" id="leaflet-sheet">
+        <div class="leaflet-cell">
+          <article class="poster leaflet" aria-label="Leaflet">
+            <p class="p-eyebrow">Corfton Road &amp; Hanger Hill Residents</p>
+            <h2 class="p-head">A hostel for high&#8209;risk offenders, <span class="p-hl">under 400 metres from a school.</span></h2>
+            <blockquote class="p-quote">
+              <p>HMPPS “cannot provide confirmation that child sex offenders will be excluded”.</p>
+              <cite>HMPPS letter to Dr Rupa Huq MP, 23 July 2026</cite>
+            </blockquote>
+            <div class="p-schools">
+              <p class="p-label">Schools &amp; nurseries within 800 m</p>
+              <ul class="leaflet-schools"></ul>
+            </div>
+            <p class="p-score"><b>8</b> questions to HMPPS. <b>None</b> answered in full.</p>
+            <div class="p-cta">
+              <div>
+                <p class="p-cta-head">Act now.</p>
+                <p>Read the case and join the residents' group.</p>
+                <p class="p-url">2corftonroad.co.uk</p>
+              </div>
+              <div class="p-qr"></div>
+            </div>
+            <p class="p-foot">We support rehabilitation · Not affiliated with any party</p>
+          </article>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <footer class="site-footer">
@@ -108,11 +142,45 @@
         urlEl.classList.add("todo");
       }
 
+      // Leaflets: put the QR code in the first one, then copy it to fill the sheet (4 × A6).
+      var sheet = document.getElementById("leaflet-sheet");
+      var cell = sheet.querySelector(".leaflet-cell");
+      if (SITE_URL && window.qrcode) cell.querySelector(".p-qr").innerHTML = qrEl.innerHTML;
+      cell.querySelector(".leaflet-schools").innerHTML = document.getElementById("school-list").innerHTML;
+      for (var i = 0; i < 3; i++) {
+        var copy = cell.cloneNode(true);
+        copy.setAttribute("aria-hidden", "true");
+        sheet.appendChild(copy);
+      }
+
       var poster = document.getElementById("poster");
       document.getElementById("ink-saver").addEventListener("change", function (e) {
-        poster.classList.toggle("ink-saver", e.target.checked);
+        document.querySelectorAll(".poster").forEach(function (el) {
+          el.classList.toggle("ink-saver", e.target.checked);
+        });
       });
-      document.getElementById("print-poster").addEventListener("click", function () { window.print(); });
+
+      // Poster / leaflets switch.
+      var stages = { poster: document.querySelector(".poster-stage"), leaflets: document.querySelector(".leaflet-stage") };
+      var leads = {
+        poster: "One A4 page. Ask before putting it up anywhere that isn't yours.",
+        leaflets: "Four leaflets on one A4 sheet. Print, then cut along the dashed lines."
+      };
+      var printBtn = document.getElementById("print-poster");
+      function setMode(mode) {
+        stages.poster.hidden = mode !== "poster";
+        stages.leaflets.hidden = mode !== "leaflets";
+        document.getElementById("mode-lead").textContent = leads[mode];
+        printBtn.textContent = mode === "poster" ? "Print poster" : "Print leaflets";
+        document.querySelectorAll("[data-mode]").forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === mode));
+        });
+      }
+      document.querySelectorAll("[data-mode]").forEach(function (b) {
+        b.addEventListener("click", function () { setMode(b.getAttribute("data-mode")); });
+      });
+      if (location.hash === "#leaflets") setMode("leaflets");
+      printBtn.addEventListener("click", function () { window.print(); });
     })();
   </script>
 </body>

@@ -671,13 +671,55 @@ mark, .hl {
 .poster.ink-saver .p-cta p, .poster.ink-saver .p-cta .p-cta-head, .poster.ink-saver .p-url { color: var(--pk) !important; }
 .poster.ink-saver .p-qr { padding: 0; }
 
+.mode-toggle { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+.mode-toggle .btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* ---------- Leaflets (4 × A6 on one A4 sheet) ----------
+   Each cell is a quarter of A4; the leaflet sits inside it with a white margin so home printers
+   (which can't print to the edge) don't clip it. Dashed lines mark where to cut. */
+.leaflet-stage { container-type: inline-size; width: min(100% - 2 * var(--gutter), 794px); margin: 2rem auto 3rem; }
+.leaflet-stage[hidden] { display: none; }
+.leaflet-sheet {
+  position: relative;
+  aspect-ratio: 210 / 297;
+  background: #fff;
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .18);
+}
+.leaflet-sheet::before, .leaflet-sheet::after { content: ""; position: absolute; z-index: 1; pointer-events: none; }
+.leaflet-sheet::before { left: 50%; top: 0; bottom: 0; border-left: 1px dashed #777; }
+.leaflet-sheet::after { top: 50%; left: 0; right: 0; border-top: 1px dashed #777; }
+.leaflet-cell { padding: 2.6cqw; min-height: 0; display: flex; }
+.poster.leaflet {
+  flex: 1; aspect-ratio: auto; min-height: 0;
+  font-size: calc(100cqw / 60);
+  border-width: .55em;
+  padding: 1.2em 1.3em 1em;
+  gap: .6em;
+  box-shadow: none;
+}
+.leaflet .p-eyebrow { font-size: .62em; letter-spacing: .22em; }
+.leaflet .p-head { font-size: 1.95em; }
+.leaflet .p-label { font-size: .56em; letter-spacing: .14em; }
+.leaflet .p-schools li { font-size: .78em; padding: .22em 0; }
+.leaflet .p-quote p { font-size: 1.12em; }
+.leaflet .p-quote cite { font-size: .56em; letter-spacing: .1em; }
+.leaflet .p-score { font-size: .98em; line-height: 1.45; }
+.leaflet .p-cta { padding: .9em 1em; gap: 1em; }
+.leaflet .p-cta p { font-size: .85em; }
+.leaflet .p-cta .p-cta-head { font-size: 1.9em; }
+.leaflet .p-qr { flex-basis: 6.2em; width: 6.2em; height: 6.2em; padding: .35em; }
+.leaflet .p-foot { font-size: .55em; }
+
 @media print {
   @page { size: A4; margin: 0; }
   html, body { background: #fff !important; }
   .poster-body .skip, .poster-body .draft-banner, .poster-body .site-header,
   .poster-body .site-footer, .poster-body .poster-toolbar { display: none !important; }
-  .poster-stage { width: 210mm; margin: 0; }
-  .poster { width: 210mm; height: 297mm; aspect-ratio: auto; box-shadow: none; }
+  .poster-stage, .leaflet-stage { width: 210mm; margin: 0; }
+  .poster-stage > .poster { width: 210mm; height: 297mm; aspect-ratio: auto; box-shadow: none; }
+  .leaflet-sheet { width: 210mm; height: 296mm; aspect-ratio: auto; box-shadow: none; overflow: hidden; }
+  .poster-stage[hidden] { display: none; }
 }
 
 /* ---------- Footer ---------- */
