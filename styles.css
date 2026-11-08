@@ -116,20 +116,6 @@ mark, .hl {
 
 .todo { background: var(--signal); color: #0d0d0d; padding: 0 .3em; font-family: var(--mono); font-size: .85em; }
 
-/* ---------- Draft strip ---------- */
-.draft-banner {
-  margin: 0;
-  background: var(--signal);
-  color: #0d0d0d;
-  font-family: var(--mono);
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  text-align: center;
-  padding: .35rem 1rem;
-}
-
 /* ---------- Header ---------- */
 .site-header {
   position: sticky;
@@ -714,7 +700,7 @@ mark, .hl {
 @media print {
   @page { size: A4; margin: 0; }
   html, body { background: #fff !important; }
-  .poster-body .skip, .poster-body .draft-banner, .poster-body .site-header,
+  .poster-body .skip, .poster-body .site-header,
   .poster-body .site-footer, .poster-body .poster-toolbar { display: none !important; }
   .poster-stage, .leaflet-stage { width: 210mm; margin: 0; }
   .poster-stage > .poster { width: 210mm; height: 297mm; aspect-ratio: auto; box-shadow: none; }
