@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <title>Act now – 2 Corfton Road – Hanger Hill Residents</title>
-  <meta name="description" content="Join the residents' WhatsApp group, share the case about 2 Corfton Road, Ealing W5, and email your child's school.">
+  <meta name="description" content="Join the residents' WhatsApp group, bring in more parents, and email your child's school, our MP and the Hanger Hill councillors about 2 Corfton Road, Ealing W5.">
   <meta property="og:title" content="Act now: 2 Corfton Road">
   <meta property="og:description" content="Join the residents' group and share the case about 2 Corfton Road.">
   <meta property="og:type" content="website">
@@ -35,7 +35,7 @@
       <div class="wrap">
         <p class="eyebrow">Resident action hub</p>
         <h1 id="act-h">Act now.</h1>
-        <p class="lead">Join, spread the word and, if you're a parent, email your child's school.</p>
+        <p class="lead">Join, bring in more parents, and email the school, our MP and our councillors.</p>
 
 
         <div class="steps">
@@ -48,9 +48,16 @@
 
           <article class="step step-plain" id="step-poster" aria-labelledby="poster-h">
             <p class="eyebrow">Step 2 · Spread the word</p>
-            <h2 id="poster-h">Print a poster</h2>
-            <p class="to">An A4 poster for your window or a noticeboard (ask first if it isn't yours).</p>
-            <div class="btn-row"><a class="btn btn-red" href="poster.html">Open printable poster →</a></div>
+            <h2 id="poster-h">Bring in more parents</h2>
+            <ul class="to-list">
+              <li>Ask other parents to join the WhatsApp group.</li>
+              <li>Hand out leaflets outside the school gates. Stay on the public pavement and keep it friendly.</li>
+              <li>Put a poster in your window or on a noticeboard (ask first if it isn't yours).</li>
+            </ul>
+            <div class="btn-row">
+              <a class="btn btn-red" id="share-group" href="https://wa.me/?text=">Send the group link →</a>
+              <a class="btn" href="poster.html">Print poster or leaflets</a>
+            </div>
             <p class="share-line">Or share the case file:
               <a id="share-wa" href="https://wa.me/?text=">WhatsApp</a>
               <span id="share-native-wrap" hidden>· <button type="button" class="linklike" id="share-native">Share…</button></span>
@@ -87,6 +94,52 @@
             <p class="status" role="status" aria-live="polite"></p>
             <p class="privacy-note">Send it to the school office's email address (it's on the school's website). Nothing you type here is saved or sent anywhere.</p>
           </article>
+
+          <div class="step-wide steps-intro">
+            <p class="eyebrow">Steps 4 and 5 · Our MP and councillors</p>
+            <p class="lead">Ask them to make HMPPS answer, and to back the right safety measures. Add your details once and both emails fill in.</p>
+            <form class="details-form" id="details" autocomplete="on" onsubmit="return false">
+              <div class="field">
+                <label for="your-name">Your full name</label>
+                <input id="your-name" name="name" type="text" autocomplete="name" placeholder="Jane Smith">
+              </div>
+              <div class="field">
+                <label for="your-address">Your street and postcode</label>
+                <input id="your-address" name="address" type="text" autocomplete="street-address" placeholder="1 Example Road, W5 2XX">
+              </div>
+            </form>
+            <p class="privacy-note">Nothing is saved or sent. It only fills the emails, which you send yourself. Your address shows you're local.</p>
+          </div>
+
+          <article class="step" id="step-mp" aria-labelledby="mp-h">
+            <p class="eyebrow">Step 4 · Email</p>
+            <h2 id="mp-h">Dr Rupa Huq MP</h2>
+            <p class="to">Ealing Central and Acton · <a href="mailto:rupa.huq.mp@parliament.uk">rupa.huq.mp@parliament.uk</a><br>Live elsewhere? <a href="https://members.parliament.uk/FindYourMP">Find your own MP</a>.</p>
+            <label class="sr" for="mp-text">Email to Dr Rupa Huq MP</label>
+            <textarea id="mp-text" data-template="mp" spellcheck="true"></textarea>
+            <p class="edited-note" hidden>You've edited this email, so your changes are kept. <button type="button" class="linklike" data-reset="mp-text">Reset</button></p>
+            <div class="btn-row">
+              <a class="btn btn-red" data-mailto="mp-text" href="mailto:rupa.huq.mp@parliament.uk">Open in email</a>
+              <a class="btn" data-gmail="mp-text" data-to="rupa.huq.mp@parliament.uk" href="https://mail.google.com/" target="_blank" rel="noopener">Open in Gmail</a>
+              <button type="button" class="btn" data-copy="mp-text">Copy text</button>
+            </div>
+            <p class="status" role="status" aria-live="polite"></p>
+          </article>
+
+          <article class="step" id="step-cllr" aria-labelledby="cllr-h">
+            <p class="eyebrow">Step 5 · Email</p>
+            <h2 id="cllr-h">Hanger Hill councillors</h2>
+            <p class="to">Jonathan Oxley, Mark Sanders and Athena Zissimos · <a href="mailto:jonathan.oxley@ealing.gov.uk,mark.sanders@ealing.gov.uk,zissimosa@ealing.gov.uk">email all three</a></p>
+            <label class="sr" for="cllr-text">Email to the Hanger Hill councillors</label>
+            <textarea id="cllr-text" data-template="cllr" spellcheck="true"></textarea>
+            <p class="edited-note" hidden>You've edited this email, so your changes are kept. <button type="button" class="linklike" data-reset="cllr-text">Reset</button></p>
+            <div class="btn-row">
+              <a class="btn btn-red" data-mailto="cllr-text" href="mailto:jonathan.oxley@ealing.gov.uk,mark.sanders@ealing.gov.uk,zissimosa@ealing.gov.uk">Open in email</a>
+              <a class="btn" data-gmail="cllr-text" data-to="jonathan.oxley@ealing.gov.uk,mark.sanders@ealing.gov.uk,zissimosa@ealing.gov.uk" href="https://mail.google.com/" target="_blank" rel="noopener">Open in Gmail</a>
+              <button type="button" class="btn" data-copy="cllr-text">Copy text</button>
+            </div>
+            <p class="status" role="status" aria-live="polite"></p>
+          </article>
         </div>
       </div>
     </section>
@@ -118,7 +171,7 @@
       <p class="footer-brand">Corfton Rd &amp; Hanger Hill Residents Working Group</p>
       <p>We support rehabilitation. We want transparency and proper safeguards. Not affiliated with any party.</p>
       <p class="footer-links"><a href="about.html">About us</a> <a href="about.html#contact">Contact</a></p>
-      <p class="footer-meta">Last updated: <time datetime="2026-10-25">25 October 2026</time></p>
+      <p class="footer-meta">Last updated: <time datetime="2026-11-08">8 November 2026</time></p>
     </div>
   </footer>
 

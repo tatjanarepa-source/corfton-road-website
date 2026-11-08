@@ -14,35 +14,33 @@
     "Residents have asked HMPPS eight questions since autumn 2025. None has been answered in full, " +
     "and HMPPS won't confirm whether the hostel is open.";
 
+  var CONCERN = "As residents and parents, we are asking that the right measures are put in place to keep our families, " +
+    "pupils at the many local schools, and vulnerable people safe.";
+
   var TEMPLATES = {
     mp: {
-      subject: "2 Corfton Road Approved Premises: please table a written parliamentary question",
+      subject: "2 Corfton Road Approved Premises: please help residents get answers from HMPPS",
       body:
         "Dear Dr Huq,\n\n" +
         "I live locally and am writing about the probation hostel (Approved Premises) at 2 Corfton Road, W5 2HS.\n\n" +
         FACTS.replace("told Dr Huq", "told you") + "\n\n" +
-        "Residents have tried letters, a formal complaint and Freedom of Information requests. " +
-        "The Ministry of Justice refused our FOI requests on cost grounds on 2 November 2026.\n\n" +
-        "Please table a written parliamentary question to the Minister responsible for prisons and probation, asking:\n" +
-        "1. Whether 2 Corfton Road has a placement restriction for people convicted of sexual offences against children, under HMPPS's own policy on Approved Premises near schools.\n" +
-        "2. Whether a site safeguarding assessment was carried out before it reopened, and whether it considered nearby schools.\n" +
-        "3. Whether the premises is currently accommodating residents.\n\n" +
-        "A written answer would give residents a clear, public reply. " +
-        "I would also be grateful if you could ask HMPPS to set up a residents' liaison forum.\n\n" +
+        CONCERN + "\n\n" +
+        "Please:\n" +
+        "1. Press HMPPS to be more transparent, and to answer the questions the community has asked it.\n" +
+        "2. Support residents in making sure the right measures are put in place to keep our families, local pupils and vulnerable people safe.\n\n" +
         "Please let me know what you will do.\n\n" +
         "Yours sincerely,\n{name}\n{address}"
     },
     cllr: {
-      subject: "2 Corfton Road Approved Premises: residents need answers",
+      subject: "2 Corfton Road Approved Premises: please help residents get answers from HMPPS",
       body:
         "Dear Councillors,\n\n" +
         "I live locally and am writing about the probation hostel (Approved Premises) at 2 Corfton Road, W5 2HS, in Hanger Hill ward.\n\n" +
         FACTS.replace("told Dr Huq", "told our MP, Dr Rupa Huq,") + "\n\n" +
+        CONCERN + "\n\n" +
         "Please:\n" +
-        "1. Press HMPPS to confirm whether the site was assessed under its near-schools policy, and to share its safeguarding assessment.\n" +
-        "2. Ask HMPPS for a residents' liaison forum, a site visit and a way to tell the community about serious incidents.\n" +
-        "3. Tell residents what HMPPS has told the council, including whether it is occupied.\n" +
-        "4. Make sure local schools and nurseries are kept informed.\n\n" +
+        "1. Press HMPPS to be more transparent, and to answer the questions the community has asked it.\n" +
+        "2. Support residents in making sure the right measures are put in place to keep our families, local pupils and vulnerable people safe.\n\n" +
         "Please let me know what you will do.\n\n" +
         "Yours sincerely,\n{name}\n{address}"
     },
@@ -186,7 +184,7 @@
       var subject = fill(key, TEMPLATES[key].subject);
       var full = "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(ta.value);
       var addTo = key === "school" ? " Add the school office's email address in the To line." : "";
-      if (missingDetails(key)) status(a, key === "school" ? "Tip: pick your school and add your name first." : "Tip: add your name and address at the top first.");
+      if (missingDetails(key)) status(a, key === "school" ? "Tip: pick your school and add your name first." : "Tip: add your name and address above first.");
       if (isWindows && full.length > MAILTO_MAX) {
         a.setAttribute("href", "mailto:" + to + "?subject=" + encodeURIComponent(subject));
         copy(ta.value).then(
@@ -206,8 +204,9 @@
       var ta = document.getElementById(a.dataset.gmail);
       var key = ta.dataset.template;
       var subject = fill(key, TEMPLATES[key].subject);
-      a.setAttribute("href", "https://mail.google.com/mail/?view=cm&fs=1&su=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(ta.value));
-      if (missingDetails(key)) status(a, key === "school" ? "Tip: pick your school and add your name first." : "Tip: add your name and address at the top first.");
+      var to = a.dataset.to ? "&to=" + encodeURIComponent(a.dataset.to) : "";
+      a.setAttribute("href", "https://mail.google.com/mail/?view=cm&fs=1" + to + "&su=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(ta.value));
+      if (missingDetails(key)) status(a, key === "school" ? "Tip: pick your school and add your name first." : "Tip: add your name and address above first.");
       else if (key === "school") status(a, "Opening Gmail… Add the school office's email address in the To line.", 10000);
     });
   });
@@ -229,6 +228,13 @@
   var shareText = "A probation hostel for high-risk offenders, under 400 metres from a school, and HMPPS won't answer residents' questions. 2 Corfton Road, Ealing W5:";
   var wa = document.getElementById("share-wa");
   if (wa) wa.href = "https://wa.me/?text=" + encodeURIComponent(shareText + " " + home);
+
+  // Invite other parents straight into the residents' WhatsApp group.
+  var GROUP = "https://chat.whatsapp.com/K1V5BPOL1rlJ4l6k7onzKl";
+  var sg = document.getElementById("share-group");
+  if (sg) sg.href = "https://wa.me/?text=" + encodeURIComponent(
+    "Parents and residents: join the WhatsApp group about the probation hostel at 2 Corfton Road, Ealing W5, near our schools. " +
+    GROUP + "\nThe facts, with sources: " + home);
 
   var native = document.getElementById("share-native");
   if (native && navigator.share) {

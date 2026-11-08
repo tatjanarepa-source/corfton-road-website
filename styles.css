@@ -239,6 +239,14 @@ mark, .hl {
   max-width: 40rem;
 }
 .hero .lead strong { color: var(--ink); }
+.hero .lead + .lead { margin-top: 1rem; }
+/* The one sentence that matters most: bigger, serif, red rule. */
+.hero-key {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(1.45rem, 5.6vw, 2.2rem); line-height: 1.25;
+  color: var(--ink); max-width: 30ch;
+  margin: 1.25rem 0; padding-left: .9rem; border-left: 6px solid var(--alarm);
+}
 .hero .btn-row { margin-top: 2rem; }
 @media (min-width: 48em) {
   .hero { padding: 5rem 0 3.5rem; }
@@ -584,6 +592,12 @@ mark, .hl {
 .step-plain { border-color: var(--band-text); }
 .step-plain .to { font-size: 1rem; margin-top: .6rem; }
 .step-plain .btn-row { margin-top: 1.25rem; }
+.to-list { margin: .6rem 0 0; padding-left: 1.2rem; color: var(--band-muted); }
+.to-list li + li { margin-top: .35rem; }
+.steps-intro { margin-top: 1.5rem; }
+.steps-intro .eyebrow { color: var(--signal); }
+.steps-intro .lead { margin-top: .5rem; }
+.steps-intro .details-form { margin-top: 1.25rem; }
 .share-line { margin-top: 1rem; font-family: var(--mono); font-size: .78rem; color: var(--band-muted); }
 .share-line a, .share-line .linklike { color: var(--signal); font-family: var(--mono); font-size: inherit; }
 .pending {
