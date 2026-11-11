@@ -7,17 +7,18 @@
   var AP = { lat: 51.519744, lng: -0.297569 };
 
   // Schools and nurseries within 1 km. Positions are the centre of each site's grounds in OpenStreetMap.
+  // walkM: shortest walking route in metres from the postcode point (OpenStreetMap foot routing, routing.openstreetmap.de, 11 Nov 2026).
   var SCHOOLS = [
-    { name: "Ada Lovelace Church of England High School", kind: "Secondary school and sixth form", lat: 51.519245, lng: -0.293047 },
-    { name: "St Augustine's Priory", kind: "Independent girls' school", lat: 51.523111, lng: -0.293281 },
-    { name: "Montpelier Primary School", kind: "Primary school", lat: 51.523488, lng: -0.303385 },
-    { name: "St Benedict's School", kind: "Independent school", lat: 51.520846, lng: -0.307549 },
-    { name: "Durston House", kind: "Independent prep school", lat: 51.516811, lng: -0.307317 },
-    { name: "Buttercups & Montessori School", kind: "Nursery", lat: 51.512482, lng: -0.298005 },
-    { name: "Christ the Saviour CE Primary School", kind: "Primary school", lat: 51.513957, lng: -0.305274 },
-    { name: "St Gregory's Catholic Primary School", kind: "Primary school", lat: 51.524898, lng: -0.306401 },
-    { name: "The Ellen Wilkinson School for Girls", kind: "Secondary school", lat: 51.516243, lng: -0.286596 },
-    { name: "Holy Family Catholic Primary School", kind: "Primary school", lat: 51.521147, lng: -0.283575 }
+    { name: "Ada Lovelace Church of England High School", kind: "Secondary school and sixth form", lat: 51.519245, lng: -0.293047, walkM: 614 },
+    { name: "St Augustine's Priory", kind: "Independent girls' school", lat: 51.523111, lng: -0.293281, walkM: 763 },
+    { name: "Montpelier Primary School", kind: "Primary school", lat: 51.523488, lng: -0.303385, walkM: 806 },
+    { name: "St Benedict's School", kind: "Independent school", lat: 51.520846, lng: -0.307549, walkM: 1157 },
+    { name: "Durston House", kind: "Independent prep school", lat: 51.516811, lng: -0.307317, walkM: 936 },
+    { name: "Buttercups & Montessori School", kind: "Nursery", lat: 51.512482, lng: -0.298005, walkM: 1198 },
+    { name: "Christ the Saviour CE Primary School", kind: "Primary school", lat: 51.513957, lng: -0.305274, walkM: 884 },
+    { name: "St Gregory's Catholic Primary School", kind: "Primary school", lat: 51.524898, lng: -0.306401, walkM: 1068 },
+    { name: "The Ellen Wilkinson School for Girls", kind: "Secondary school", lat: 51.516243, lng: -0.286596, walkM: 1244 },
+    { name: "Holy Family Catholic Primary School", kind: "Primary school", lat: 51.521147, lng: -0.283575, walkM: 1640 }
   ];
 
   var RINGS = [400, 800, 1000];       // metres
@@ -61,7 +62,7 @@
         '<td class="n"><span>' + s.n + '</span></td>' +
         '<td><span class="name"></span><span class="kind"></span></td>' +
         '<td class="num"><b>' + round10(s.m) + ' m</b></td>' +
-        '<td class="num">~' + Math.max(1, Math.round(s.m / WALK_M_PER_MIN)) + ' min</td>';
+        '<td class="num">~' + Math.max(1, Math.round(s.walkM / WALK_M_PER_MIN)) + ' min</td>';
       tr.querySelector(".name").textContent = s.name;
       tr.querySelector(".kind").textContent = s.kind;
       tbody.appendChild(tr);
@@ -228,7 +229,8 @@
       fillOpacity: r === 1000 ? 0.03 : 0.07,
       interactive: false
     }).addTo(map);
-    var label = r === 1000 ? "1 km" : r + " m · " + Math.round(r / WALK_M_PER_MIN) + " min";
+    // No walking minutes on the rings: they are straight-line circles, and real routes are much longer.
+    var label = r === 1000 ? "1 km" : r + " m";
     L.marker(offset(r, LABEL_BEARING[r]), {
       interactive: false,
       icon: L.divIcon({ className: "ring-label-wrap", html: '<span class="ring-label">' + label + '</span>', iconSize: [0, 0] })

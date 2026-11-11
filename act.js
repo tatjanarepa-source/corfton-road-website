@@ -10,9 +10,10 @@
     "It can house up to 22 men assessed as high risk of serious harm, including MAPPA Level 2 and 3 cases. " +
     "It is under 400 metres from Ada Lovelace CE High School, with five schools and nurseries within 800 metres.\n\n" +
     "On 23 July 2026 HMPPS told Dr Huq it \"cannot provide confirmation that child sex offenders will be excluded\", " +
-    "although its own policy says some Approved Premises near schools are unsuitable for them.\n\n" +
-    "Residents have asked HMPPS eight questions since autumn 2025. None has been answered in full, " +
-    "and HMPPS won't confirm whether the hostel is open.";
+    "although its own policy says some Approved Premises near schools are unsuitable for them. " +
+    "We don't know of anyone convicted of such an offence living there; we are asking whether the site was assessed for this.\n\n" +
+    "Residents have asked HMPPS eight questions since autumn 2025. Four have not been answered, two only partly, " +
+    "and two are waiting on Freedom of Information requests. HMPPS won't confirm whether the hostel is open.";
 
   var CONCERN = "As residents and parents, we are asking that the right measures are put in place to keep our families, " +
     "pupils at the many local schools, and vulnerable people safe.";
