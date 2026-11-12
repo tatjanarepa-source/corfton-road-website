@@ -1,0 +1,40 @@
+# Publishes the site to GitHub Pages on every push to main.
+# Replaces GitHub's built-in "pages build and deployment" run, which kept
+# failing to start (startup_failure / stuck in Queued) from 11 Nov 2026.
+# Needs: Settings -> Pages -> Build and deployment -> Source = "GitHub Actions".
+name: Publish site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy only the public site files
+        run: |
+          mkdir _site
+          cp CNAME *.html *.js *.css _site/
+          cp -r fonts vendor _site/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
